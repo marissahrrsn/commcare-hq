@@ -534,11 +534,6 @@ class BaseEditLocationView(BaseLocationView):
             is_new=self.creates_new_location,
         )
 
-    def _get_loc_types_with_users(self):
-        return list(LocationType.objects
-                    .filter(domain=self.domain, has_user=True)
-                    .values_list('name', flat=True))
-
     def form_valid(self):
         messages.success(self.request, _('Location saved!'))
         return HttpResponseRedirect(
@@ -580,7 +575,6 @@ class BaseEditLocationView(BaseLocationView):
                                         user=self.request.couch_user),
             'form_tab': self.form_tab,
             'creates_new_location': self.creates_new_location,
-            'loc_types_with_users': self._get_loc_types_with_users(),
         }
 
 
